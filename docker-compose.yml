@@ -1,0 +1,53 @@
+version: '3.8'
+
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+services:
+
+  ### denoDark API ##############################################
+  application:
+    build:
+      context: .
+      dockerfile: ${DOCKER_FILE}
+    ports:
+      - "${PORT}:8000"
+    volumes:
+      - .:${APP_CODE_PATH_CONTAINER}
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_COLLECTION=${DB_COLLECTION}
+    depends_on:
+      - mongo
+    networks:
+      - frontend
+      - backend
+
+    ### MongoDB ##############################################
+  mongo:
+    image: 'mongo:latest'
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_ROOT_USER=${MONGO_ROOT_USER}
+      - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_COLLECTION=${DB_COLLECTION}
+    ports:
+      - "${DB_PORT}:27017"
+    volumes:
+      - ${DATA_PATH_HOST}/mongo:/data/db
+      - ${DB_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+    networks:
+      - backend
