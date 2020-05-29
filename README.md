@@ -1,6 +1,6 @@
-# Deno Test API
+# Deno Dark API
 
-Deno Test API
+Deno Dark API
 
 ## Requirements
 
@@ -14,7 +14,7 @@ Deno Test API
 
 Download zip file and extract it [latest release](https://github.com/reysmerwvr/deno-test-api). Or clone the repository and cd into it.
 
-Deno Test API uses a number of open source projects to work properly:
+Deno Dark API uses a number of open source projects to work properly:
 
 - [Deno] - A secure runtime for JavaScript and TypeScript.
 

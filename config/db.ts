@@ -1,8 +1,4 @@
-import { init, MongoClient } from "https://deno.land/x/mongo@v0.7.0/mod.ts";
-
-// Initialize the plugin
-await init();
-
+import { MongoClient } from "https://deno.land/x/mongo@v0.7.0/mod.ts";
 class Database {
   public client: MongoClient;
   constructor(public collection: string, public uri: string) {
